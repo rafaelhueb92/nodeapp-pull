@@ -1,0 +1,35 @@
+name: PR Test Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '**/*.js'  # You can specify file patterns if you only want to run tests on specific files
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # You can change this to other operating systems like macos-latest or windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # Checks out your code so the workflow can run on it
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'  # Specify the Node.js version you want to use
+
+      - name: Install dependencies
+        run: |
+          npm install  # This installs the dependencies listed in your package.json
+
+      - name: Run tests
+        run: |
+          npm test  # Runs the tests using the test script defined in package.json
+        continue-on-error: false  # This will stop the workflow if tests fail
+
