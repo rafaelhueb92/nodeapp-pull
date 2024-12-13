@@ -1,4 +1,4 @@
-const db = require('./db');
+const db = require('../lib/db');
 
 class Characters {
   constructor({name, nickname, game} = { }) {
@@ -29,11 +29,4 @@ class Characters {
 
 }
 
-let instance = null;
-
-module.exports = ({ name, nickname, game } = {}) => {
-  if (!instance) {
-    instance = new Characters({ name, nickname, game });
-  }
-  return instance;
-};
+module.exports = Characters
